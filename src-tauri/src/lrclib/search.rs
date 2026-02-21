@@ -1,5 +1,6 @@
 use std::time::Duration;
 
+use crate::utils::strip_trailing_brackets;
 use anyhow::Result;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -38,9 +39,9 @@ pub async fn request(
     lrclib_instance: &str,
 ) -> Result<Response> {
     let params: Vec<(String, String)> = vec![
-        ("track_name".to_owned(), title.to_owned()),
-        ("artist_name".to_owned(), artist_name.to_owned()),
-        ("album_name".to_owned(), album_name.to_owned()),
+        ("track_name".to_owned(), strip_trailing_brackets(title)),
+        ("artist_name".to_owned(), strip_trailing_brackets(artist_name)),
+        ("album_name".to_owned(), strip_trailing_brackets(album_name)),
         ("q".to_owned(), q.to_owned()),
     ];
 
