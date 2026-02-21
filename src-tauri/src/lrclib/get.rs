@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use crate::utils::strip_timestamp;
+use crate::utils::{strip_timestamp, strip_trailing_brackets};
 use anyhow::Result;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -72,9 +72,9 @@ async fn make_request(
     lrclib_instance: &str,
 ) -> Result<reqwest::Response> {
     let params: Vec<(String, String)> = vec![
-        ("artist_name".to_owned(), artist_name.to_owned()),
-        ("track_name".to_owned(), title.to_owned()),
-        ("album_name".to_owned(), album_name.to_owned()),
+        ("artist_name".to_owned(), strip_trailing_brackets(artist_name)),
+        ("track_name".to_owned(), strip_trailing_brackets(title)),
+        ("album_name".to_owned(), strip_trailing_brackets(album_name)),
         ("duration".to_owned(), duration.round().to_string()),
     ];
 
